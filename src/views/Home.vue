@@ -36,14 +36,6 @@ export default class Home extends Vue {
       imgPathString: welcomeImg,
       leftText: false,
     },
-    {
-      title: 'WELCOME!',
-      description: 'Weekly blog articles with all things programming including HTML, CSS, JavaScript and more. Register today to never miss a post!',
-      routePath: 'auth',
-      routeLabel: 'LOGIN/REGISTER',
-      imgPathString: 'https://www.viewhotels.jp/asakusa-annex/wp-content/uploads/sites/6/2020/03/test-img.jpg',
-      leftText: true
-    },
   ]
 }
 </script>
