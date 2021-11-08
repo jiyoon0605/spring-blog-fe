@@ -1,19 +1,24 @@
 <template>
-  <div class="home">
-    <Header/>
-    <router-view></router-view>
-  </div>
+  <main>
+    <InfoSection/>
+  </main>
 </template>
 <script lang="ts">
+
+import InfoSection from "@/components/card/InfoSection.vue";
 import {Component, Vue} from "vue-property-decorator";
-import Header from "@/components/Header.vue";
 
 @Component({
-  components: {
-    Header
-  }
+  components: {InfoSection},
+  component: InfoSection
 })
-export default class Home extends Vue {
-
+export default class Home extends Vue{
+  infomations=[
+    {
+      title:'',
+      description:'',
+      path:''
+    }
+  ]
 }
 </script>
