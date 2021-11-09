@@ -7,9 +7,12 @@
     <div class="title">
       Create Your<br>Blog Account
     </div>
-    <IconInput icon-name="el-icon-message" placeholder="email" @onChange="onChange"/>
-    <IconInput icon-name="el-icon-lock" placeholder="password" type="password" @onChange="onChange"/>
-    <RoundButton button-label="SIGN IN"/>
+    <form class="login-container" v-on:submit.prevent="onSubmit">
+      <IconInput icon-name="el-icon-message" placeholder="email" @onChange="onChange"/>
+      <IconInput icon-name="el-icon-lock" placeholder="password" type="password" @onChange="onChange"/>
+      <RoundButton button-label="SIGN IN" type="submit"/>
+    </form>
+
   </div>
 </template>
 <script lang="ts">
@@ -29,7 +32,10 @@ export default class Login extends Vue {
 
   onChange({name, value}) {
     this.loginInfo[name] = value;
-    console.log(this.loginInfo)
+  }
+
+  onSubmit() {
+    console.log("submit")
   }
 }
 </script>
@@ -41,24 +47,4 @@ export default class Login extends Vue {
   align-items: center;
 }
 
-.title {
-  font-family: Vitro_core;
-  font-size: 30px;
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.link-button {
-  text-decoration: underline;
-  font-family: Vitro_pride !important;
-  font-size: 20px !important;
-  color: black !important;
-}
-
-.login-register {
-  font-family: Vitro_pride;
-  font-size: 20px;
-  color: black;
-  margin-bottom: 30px
-}
 </style>

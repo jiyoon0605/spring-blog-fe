@@ -16,11 +16,12 @@ import Register from "@/views/auth/Register.vue";
   components: {Register, Login}
 })
 export default class Auth extends Vue {
-  private isLogin: boolean = false;
+  private isLogin: boolean = true;
 
   @Watch('$route')
   watchRoute() {
     this.isLogin=this.$route.path.split("/")[1]==='login'
+    console.log(this.$route.path.split("/")[1]==='login')
   }
 }
 </script>
@@ -59,6 +60,26 @@ export default class Auth extends Vue {
   position: absolute;
   left: 580px;
   top: -10px;
+}
 
+
+.title {
+  font-family: Vitro_core;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.link-button {
+  text-decoration: underline;
+  font-family: Vitro_pride !important;
+  font-size: 20px !important;
+}
+
+.login-register {
+  font-family: Vitro_pride;
+  font-size: 20px;
+  color: black;
+  margin-bottom: 30px
 }
 </style>

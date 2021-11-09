@@ -27,6 +27,10 @@ export default class IconInput extends Vue {
   width: 100% !important;
   height: 100% !important;
   font-family: Vitro_pride !important;
+  font-size: 15px !important;
+  background-color: #303030 !important;
+  color: white !important;
+
 }
 
 .input-container {
