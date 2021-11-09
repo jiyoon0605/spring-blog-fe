@@ -1,20 +1,18 @@
 <template>
-  <div class="home">
-    <router-view></router-view>
+  <div>
+    <Header/>
+    <router-view/>
+    <Footer/>
   </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
 import Header from "@/components/Header.vue";
 import Footer from "@/components/Footer.vue";
-
 @Component({
-  components: {
-    Header,
-    Footer
-  }
+  components: {Footer, Header}
 })
-export default class Layout extends Vue {
+export default class Main extends Vue{
 
 }
 </script>

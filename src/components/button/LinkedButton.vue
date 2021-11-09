@@ -3,16 +3,16 @@
 </template>
 <script lang="ts">
 
-import {Prop, Vue} from "vue-property-decorator";
+import {Mixins, Prop} from "vue-property-decorator";
 import Component from "vue-class-component";
+import Button from "@/components/button/Button";
 
 @Component
-export default class LinkedButton extends Vue {
+export default class LinkedButton extends Mixins<Button>(Button) {
   @Prop({default: ''}) private pathName: string;
-  @Prop({default: ''}) private buttonLabel: string;
 
   public goto() {
-    this.$router.push(this.pathName);
+    this.$router.push({name: this.pathName});
   }
 }
 </script>

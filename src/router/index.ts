@@ -2,25 +2,35 @@ import VueRouter, {RouteConfig} from "vue-router";
 
 const routes: RouteConfig[] = [
     {
-        path: '/home',
-        name: 'home',
-        component: () => import('../views/Home.vue')
-    },
-    {
         path: '/',
-        redirect: '/home'
+        name: 'main',
+        component: () => import('../views/Main.vue'),
+        children: [
+            {
+                path: '/home',
+                name: 'home',
+                component: () => import('../views/Home.vue')
+            },
+            {
+                path: '/blog',
+                name: 'blog',
+                component: () => import('../views/BlogMain.vue')
+            },
+        ],
+        redirect: {
+            name: 'home'
+        }
     },
     {
-        path: '/blog',
-        name: 'blog',
-        component: () => import('../views/BlogMain.vue')
-    },
-    {
-        path: '/auth',
+        path: '/login',
         name: 'auth',
-        component: () => import('../views/Auth.vue')
-    }
-
+        component: () => import('../views/auth/Auth.vue'),
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/auth/Auth.vue'),
+    },
 ]
 
 const router = new VueRouter(

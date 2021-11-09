@@ -1,13 +1,13 @@
 <template>
-<div>
-  auth
-</div>
+  <div>
+    Register
+  </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
 
 @Component
-export default class Auth extends Vue {
+export default class Register extends Vue {
 
 }
 </script>
