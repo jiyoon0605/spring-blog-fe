@@ -2,7 +2,7 @@
   <div class="register-container">
     <div class="login-register">
       Already have an account?
-      <LinkedButton path-name="auth" button-label="Login"/>
+      <LinkedButton class="auth-link-button"  path-name="auth" button-label="Login"/>
     </div>
     <div class="title">
       Create Your<br>Blog Account

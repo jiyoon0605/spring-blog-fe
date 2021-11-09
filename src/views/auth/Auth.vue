@@ -70,7 +70,7 @@ export default class Auth extends Vue {
   margin-bottom: 30px;
 }
 
-.link-button {
+.auth-link-button {
   text-decoration: underline;
   font-family: Vitro_pride !important;
   font-size: 20px !important;
