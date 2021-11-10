@@ -1,7 +1,7 @@
 <template>
   <div class="auth-container">
     <div class="container">
-      <Login v-if="isLogin"/>
+      <Login v-if="getIsLogin"/>
       <Register v-else/>
     </div>
     <div class="angle"/>
@@ -9,7 +9,7 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Watch} from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 import Login from "@/views/auth/Login.vue";
 import Register from "@/views/auth/Register.vue";
 @Component({
@@ -18,10 +18,8 @@ import Register from "@/views/auth/Register.vue";
 export default class Auth extends Vue {
   private isLogin: boolean = true;
 
-  @Watch('$route')
-  watchRoute() {
-    this.isLogin=this.$route.path.split("/")[1]==='login'
-    console.log(this.$route.path.split("/")[1]==='login')
+  get getIsLogin() {
+    return this.$route.path.split("/")[1]==='login'
   }
 }
 </script>

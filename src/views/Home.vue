@@ -24,7 +24,6 @@ import welcomeImg from "@/assets/blogPhotos/coding.jpg"
 
 @Component({
   components: {LinkedButton, InfoSection},
-  component: InfoSection
 })
 export default class Home extends Vue {
   cardInfos: CardInfo[] = [
