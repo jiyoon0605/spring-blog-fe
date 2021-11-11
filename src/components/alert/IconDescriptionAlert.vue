@@ -12,26 +12,47 @@
 
 </template>
 <script lang="ts">
-import {Component, Prop, Vue} from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 
 @Component
 export default class IconDescriptionAlert extends Vue {
-  @Prop({default: () => false}) private readonly isShow: boolean;
-  @Prop({default: () => ''}) private readonly type: string;
-  @Prop({default: () => ''}) private readonly title: string;
-  @Prop({default: () => ''}) private readonly description: string;
 
-  onClose(){
-    this.$emit("close");
+  onClose() {
+    this.$store.commit("setAlertIsShow", false);
   }
+
+  get isShow() {
+    return this.$store.getters.getAlertInfo.isShow;
+  }
+
+  get title() {
+    return this.$store.getters.getAlertInfo.title;
+  }
+
+  get type() {
+    return this.$store.getters.getAlertInfo.type;
+  }
+
+  get description() {
+    return this.$store.getters.getAlertInfo.description;
+  }
+
 }
 </script>
 <style>
 .alert-container {
-  top: 20px;
+  top: 40px;
   position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+  box-sizing: border-box;
+  padding: 0 50px;
 }
-.el-alert{
-  min-width: 300px;
+
+.el-alert {
+  min-width: 100px !important;
+  max-width: 500px !important;
 }
 </style>

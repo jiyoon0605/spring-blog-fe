@@ -5,7 +5,8 @@
       <div class="navigation">
         <LinkedButton class="header-link" buttonLabel="HOME" pathName="home"/>
         <LinkedButton class="header-link" buttonLabel="BLOGS" path-name="blog"/>
-        <LinkedButton class="header-link" buttonLabel="LOGIN / REGISTER" path-name="auth"/>
+        <el-button class="link-button header-link" type="text" @click="logout" v-text="'LOGOUT'" v-if="getIsLogin"/>
+        <LinkedButton class="header-link" buttonLabel="LOGIN / REGISTER" path-name="auth" v-else/>
       </div>
     </header>
   </div>
@@ -22,8 +23,21 @@ import InfoSection from "@/components/card/InfoSection.vue";
 })
 export default class Header extends Vue {
 
-  public onTitleClick(){
+  private isLogin = false;
+
+  public onTitleClick() {
     this.$router.push("home");
+  }
+
+  get getIsLogin() {
+    this.isLogin = localStorage.getItem("accessToken") !== null;
+    return this.isLogin;
+  }
+
+  logout() {
+    console.log("logout")
+    localStorage.removeItem("accessToken");
+    this.isLogin = false;
   }
 }
 </script>

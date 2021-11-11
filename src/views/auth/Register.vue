@@ -1,12 +1,5 @@
 <template>
   <div class="register-container">
-    <IconDescriptionAlert
-        :is-show="getAlertData.isShow"
-        :type="getAlertData.type"
-        :title="getAlertData.title"
-        :description="getAlertData.description"
-        @close="onAlertClose"
-    />
     <div class="login-register">
       Already have an account?
       <LinkedButton class="auth-link-button" path-name="auth" button-label="Login"/>
@@ -24,7 +17,7 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
+import {Component, Vue, Watch} from "vue-property-decorator";
 import LinkedButton from "@/components/button/LinkedButton.vue";
 import IconInput from "@/components/input/IconInput.vue";
 import RoundButton from "@/components/button/RoundButton.vue";
@@ -58,7 +51,7 @@ export default class Register extends Vue {
   }
 
   onSubmit() {
-    if (!this.onCheckEmail(this.registerInfo.email) && !this.onInvalidInfo()) {
+    if (!this.onCheckEmail(this.registerInfo.email) || !this.onInvalidInfo()) {
       return;
     }
 
@@ -78,12 +71,15 @@ export default class Register extends Vue {
   onCheckEmail(email: string) {
     const reg = new RegExp(/[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}/g);
     const result = reg.test(email);
+    if (result) {
+      return true;
+    }
     this.alertData.title = 'Invalid email';
     this.alertData.description = 'Please check your email';
     this.alertData.type = "error";
     this.alertData.isShow = true;
 
-    return result;
+    return false;
   }
 
   onInvalidInfo() {
@@ -95,7 +91,7 @@ export default class Register extends Vue {
       this.makeAlertData('nickname');
       return false;
     }
-    if (this.registerInfo.password === '') {
+    if (this.registerInfo.password == '') {
       this.makeAlertData('password');
       return false;
     }
@@ -108,10 +104,9 @@ export default class Register extends Vue {
     this.alertData.type = "error";
     this.alertData.isShow = true;
   }
-
-  onAlertClose() {
-    console.log("close")
-    this.alertData.isShow = false;
+  @Watch('alertData', {deep: true})
+  commitAlertInfo() {
+    this.$store.commit("setAlertInfo", this.alertData);
   }
 }
 </script>

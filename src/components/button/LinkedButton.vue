@@ -9,9 +9,10 @@ import Button from "@/components/button/Button";
 
 @Component
 export default class LinkedButton extends Mixins<Button>(Button) {
-  @Prop({default: ''}) private pathName: string;
+  @Prop() private pathName: string;
 
   public goto() {
+    if (!this.pathName) return;
     this.$router.push({name: this.pathName});
   }
 }
