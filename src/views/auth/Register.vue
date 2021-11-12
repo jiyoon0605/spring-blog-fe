@@ -12,34 +12,29 @@
       <IconInput icon-name="el-icon-user" placeholder="nickname" @onChange="onChange"/>
       <IconInput icon-name="el-icon-message" placeholder="email" @onChange="onChange"/>
       <IconInput icon-name="el-icon-lock" placeholder="password" type="password" @onChange="onChange"/>
-      <RoundButton button-label="SIGN UP" type="submit"/>
+      <RoundButton button-label="SIGN UP" type="submit" style="margin-top: 40px"/>
     </form>
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Watch} from "vue-property-decorator";
+import {Component} from "vue-property-decorator";
 import LinkedButton from "@/components/button/LinkedButton.vue";
 import IconInput from "@/components/input/IconInput.vue";
 import RoundButton from "@/components/button/RoundButton.vue";
 import {createAccount} from "@/api/AuthApi";
 import {UserInfo} from "@/model/Auth";
 import IconDescriptionAlert from "@/components/alert/IconDescriptionAlert.vue";
+import CommonView from "@/views/CommonView";
 
 @Component({
   components: {IconDescriptionAlert, RoundButton, IconInput, LinkedButton}
 })
-export default class Register extends Vue {
+export default class Register extends CommonView {
   private registerInfo: UserInfo = {
     username: '',
     nickname: '',
     email: '',
     password: ''
-  }
-  private alertData = {
-    isShow: false,
-    type: "success",
-    description: "",
-    title: ""
   }
 
   get getAlertData() {
@@ -55,17 +50,23 @@ export default class Register extends Vue {
       return;
     }
 
-    createAccount(this.registerInfo).then(res => {
-      const {message, result, success} = res.data;
-      this.alertData.title = message;
-      this.alertData.description = result.message;
-      if (success) {
-        this.alertData.type = 'success';
-      } else {
-        this.alertData.type = 'error';
-      }
-      this.alertData.isShow = true;
-    })
+    createAccount(this.registerInfo)
+        .then(res => {
+          const {message, result} = res.data;
+          this.alertData.title = message;
+          this.alertData.description = result.message;
+          this.alertData.type = 'success';
+          this.$router.push('login');
+        })
+        .catch(err => {
+          const {result, message} = err.response.data;
+          this.alertData.title = message;
+          this.alertData.description = result.message;
+          this.alertData.type = 'error';
+        })
+        .finally(() => {
+          this.alertData.isShow = true;
+        })
   }
 
   onCheckEmail(email: string) {
@@ -104,10 +105,7 @@ export default class Register extends Vue {
     this.alertData.type = "error";
     this.alertData.isShow = true;
   }
-  @Watch('alertData', {deep: true})
-  commitAlertInfo() {
-    this.$store.commit("setAlertInfo", this.alertData);
-  }
+
 }
 </script>
 <style>

@@ -20,7 +20,5 @@ export default class RoundButton extends Mixins<Button>(Button) {
   border: none !important;
   color: white !important;
   padding: 10px 30px !important;
-  margin-top: 40px;
-
 }
 </style>

@@ -17,6 +17,7 @@ import {Component, Vue} from "vue-property-decorator";
 @Component
 export default class IconDescriptionAlert extends Vue {
 
+
   onClose() {
     this.$store.commit("setAlertIsShow", false);
   }

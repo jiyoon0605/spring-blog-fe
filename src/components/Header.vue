@@ -35,7 +35,6 @@ export default class Header extends Vue {
   }
 
   logout() {
-    console.log("logout")
     localStorage.removeItem("accessToken");
     this.isLogin = false;
   }
@@ -49,9 +48,9 @@ export default class Header extends Vue {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  padding: 20px 80px;
+  padding: 20px 130px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .3);
-  z-index: 999;
+  z-index: 99;
 }
 
 .logo {

@@ -18,7 +18,7 @@
 
 import InfoSection from "@/components/card/InfoSection.vue";
 import {Component, Vue} from "vue-property-decorator";
-import {CardInfo} from "@/model/home";
+import {CardInfo} from "@/model/Home";
 import LinkedButton from "@/components/button/LinkedButton.vue";
 import welcomeImg from "@/assets/blogPhotos/coding.jpg"
 

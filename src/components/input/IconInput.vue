@@ -23,7 +23,7 @@ export default class IconInput extends Vue {
 }
 </script>
 <style>
-.el-input__inner {
+.input-container .el-input__inner {
   width: 100% !important;
   height: 100% !important;
   font-family: Vitro_pride !important;

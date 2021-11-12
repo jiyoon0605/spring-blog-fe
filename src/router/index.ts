@@ -14,8 +14,18 @@ const routes: RouteConfig[] = [
             {
                 path: '/blog',
                 name: 'blog',
-                component: () => import('../views/BlogMain.vue')
+                component: () => import('../views/blog/BlogMain.vue'),
             },
+            {
+                path: 'blog/:id',
+                name: 'postDetail',
+                component: () => import('../views/blog/BlogDetail.vue')
+            },
+            {
+                path: 'write',
+                name: 'postWrite',
+                component: () => import('../views/blog/BlogPost.vue')
+            }
         ],
         redirect: {
             name: 'home'

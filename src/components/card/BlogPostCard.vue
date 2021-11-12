@@ -1,17 +1,45 @@
 <template>
-  <el-card class="post-card-container">
-    <img class="blog-card-img"
-         src="https://thumbs.dreamstime.com/z/tv-test-image-card-rainbow-multi-color-bars-geometric-signals-retro-hardware-s-minimal-pop-art-print-suitable-89603635.jpg"/>
+  <el-card class="post-card-container" @click.native="goToDetail">
+    <img class="blog-card-img" :src="image" v-if="image"/>
     <div class="post-card-box">
-      <div class="blog-card-title">test</div>
-      <div class="blog-card-date">2021.11.09</div>
+      <div class="blog-card-title" v-text="title"/>
+      <div class="blog-card-contents" v-text="contents"/>
+      <div class="blog-card-date" v-text="createAt"/>
     </div>
   </el-card>
 </template>
 <script lang="ts">
-import {Vue} from "vue-property-decorator";
+import {Component, Prop, Vue} from "vue-property-decorator";
+import {Post} from "@/model/Post";
 
+@Component
 export default class BlogPostCard extends Vue {
+  @Prop() private readonly postData: Post;
+
+  get title() {
+    return this.postData.TITLE;
+  }
+
+  get contents() {
+    return this.postData.CONTENTS;
+  }
+
+  get createAt() {
+    return this.postData.CREATED_AT;
+  }
+
+  get image() {
+    return this.postData.IMAGE_URL;
+  }
+
+  goToDetail() {
+    this.$router.push({
+      name: 'postDetail',
+      params: {
+        id: this.postData.ID.toString()
+      }
+    })
+  }
 
 }
 </script>
@@ -56,6 +84,16 @@ export default class BlogPostCard extends Vue {
 .blog-card-date {
   font-family: Vitro_pride;
   font-size: 15px;
-  margin: 10px 0px;
+  margin: 10px 0;
+}
+
+.blog-card-contents {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  margin-top: 10px;
 }
 </style>
