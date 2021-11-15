@@ -11,3 +11,7 @@ export function getPostDetail(id): Promise<any> {
 export function createNewPost(data): Promise<any> {
     return getAxiosAuth().post('/post/', data);
 }
+
+export function increaseView(id): Promise<any> {
+    return getAxios().put(`/post/view/${id}`)
+}

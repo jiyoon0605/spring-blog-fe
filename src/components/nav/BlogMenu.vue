@@ -5,14 +5,15 @@
            active-text-color="#000000">
     <el-menu-item index="1" @keyup="onSearch">
       <el-input v-model="searchText" class="blog-nav-input" prefix-icon="el-icon-search"
-                @keyup.native.enter="onSearch"/>
+                @keyup.native.enter="onSearch" placeholder="search by title"/>
     </el-menu-item>
     <el-menu-item index="2">
-      <el-select class="blog-nav-select" v-model="sortType" placeholder="sort" default-first-option>
+      <el-select class="blog-nav-select" v-model="sortType" placeholder="sort" default-first-option
+                 @change="onChangeSort">
         <el-option v-for="(type,index) in sortTypeList"
                    :key="index"
                    :label="type.label"
-                   :value="type.value"/>
+                   :value="index"/>
       </el-select>
     </el-menu-item>
     <el-menu-item>
@@ -25,7 +26,7 @@ import {Component, Vue} from "vue-property-decorator";
 
 @Component
 export default class BlogNavigation extends Vue {
-  private sortType: string = 'last';
+  private sortType: number = 0;
   private searchText: string = '';
   private sortTypeList =
       [
@@ -35,13 +36,17 @@ export default class BlogNavigation extends Vue {
       ];
 
   onSearch() {
-    console.log("teset");
+    this.$emit("onSearch", this.searchText)
   }
 
   gotoWrite() {
-    this.$router.push({name:'postWrite'});
+    this.$router.push({name: 'postWrite'});
   }
 
+  onChangeSort() {
+    console.log(this.sortType)
+    this.$emit('onChangeSort', this.sortType);
+  }
 
 }
 </script>

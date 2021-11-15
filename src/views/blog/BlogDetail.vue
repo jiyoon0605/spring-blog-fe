@@ -10,7 +10,7 @@
         </div>
         <div class="blog-detail-view">view : {{ view }}</div>
         <div class="contents-box">
-          <editor-content class="editor-content" :editor="editor" v-if="editor" editable="false"/>
+          <editor-content class="editor-content" :editor="editor" v-if="editor"/>
         </div>
       </div>
     </div>
@@ -19,7 +19,7 @@
 <script lang="ts">
 import CommonView from "@/views/CommonView";
 import {Component} from "vue-property-decorator";
-import {getPostDetail} from "@/api/PostApi";
+import {getPostDetail, increaseView} from "@/api/PostApi";
 import {PostDetail} from "@/model/Post";
 import {Editor, EditorContent} from "@tiptap/vue-2";
 import StarterKit from "@tiptap/starter-kit";
@@ -88,20 +88,24 @@ export default class BlogDetail extends CommonView {
 
 
   getPostDetailData() {
-    getPostDetail(this.postId)
-        .then(res => {
-          const {data} = res.data.result;
-          this.postData = data;
-          this.editor.commands.setContent(this.postData.CONTENTS)
-        })
-        .catch(err => {
-          const {data} = err.response;
-          this.alertData.type = 'error';
-          this.alertData.title = data.message;
-          this.alertData.description = data.result.data.message;
-          this.alertData.isShow = true;
-          this.$router.push({name: 'blog'});
-        })
+    increaseView(this.$route.params.id)
+        .then(() =>
+            getPostDetail(this.postId)
+                .then(res => {
+                  const {data} = res.data.result;
+                  this.postData = data;
+                  this.editor.commands.setContent(this.postData.CONTENTS)
+                })
+                .catch(err => {
+                  const {data} = err.response;
+                  this.alertData.type = 'error';
+                  this.alertData.title = data.message;
+                  this.alertData.description = data.result.data.message;
+                  this.alertData.isShow = true;
+                  this.$router.push({name: 'blog'});
+                })
+        )
+
   }
 }
 </script>

@@ -5,7 +5,7 @@
       <div class="blog-card-title" v-text="title"/>
       <div class="blog-card-date" v-text="createAt"/>
       <div class="blog-card-contents" v-text="contents"/>
-
+      <div class="blog-card-view" v-text="view"/>
     </div>
   </el-card>
 </template>
@@ -33,6 +33,10 @@ export default class BlogPostCard extends Vue {
     return this.postData.IMAGE_URL;
   }
 
+  get view() {
+    return this.postData.VIEWS
+  }
+
   goToDetail() {
     this.$router.push({
       name: 'postDetail',
@@ -56,6 +60,7 @@ export default class BlogPostCard extends Vue {
   border-radius: 20px;
   transition: 300ms ease all;
   padding: 0 !important;
+  position: relative;
 }
 
 .post-card-container:hover {
@@ -86,6 +91,7 @@ export default class BlogPostCard extends Vue {
   font-family: Vitro_pride;
   font-size: 15px;
   margin: 10px 0;
+  color: #9fa3a9;
 }
 
 .blog-card-contents {
@@ -96,5 +102,12 @@ export default class BlogPostCard extends Vue {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   margin-top: 10px;
+}
+
+.blog-card-view {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #9fa3a9;
 }
 </style>

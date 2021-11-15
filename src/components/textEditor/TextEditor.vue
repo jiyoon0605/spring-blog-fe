@@ -112,14 +112,12 @@ export default class TextEditor extends CommonView {
 
   onHeadingChange(e) {
     if (e.target.value === 0) {
-      console.log(this.heading)
       this.editor.chain().focus().toggleHeading({level: parseInt(this.heading)}).run();
       this.heading = 0;
     } else {
       this.editor.chain().focus().toggleHeading({level: parseInt(e.target.value)}).run();
       this.heading = e.target.value;
     }
-
   }
 
   onFocus() {

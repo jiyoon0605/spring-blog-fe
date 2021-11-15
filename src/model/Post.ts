@@ -4,6 +4,7 @@ export interface Post {
     ID: 0,
     CREATED_AT: string,
     CONTENTS: string,
+    VIEWS: number
 }
 
 export interface PostDetail {
@@ -14,8 +15,8 @@ export interface PostDetail {
     WRITER: string,
     ID: number,
     VIEWS: number,
-    NICKNAME:string,
-    EMAIL:string
+    NICKNAME: string,
+    EMAIL: string
 }
 
 export type Level = 1 | 2 | 3 | 4 | 5 | 6
