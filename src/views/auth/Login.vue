@@ -50,14 +50,12 @@ export default class Login extends CommonView {
           this.alertData.title = message;
           this.alertData.description = result.message;
           localStorage.setItem("accessToken", result.data.token);
-          return true;
         })
         .catch(err => {
           const {message, result} = err.response.data;
           this.alertData.type = 'error';
           this.alertData.title = message;
           this.alertData.description = result.message;
-          return false;
         })
         .finally(() => {
               this.alertData.isShow = true;

@@ -1,7 +1,7 @@
 <template>
   <div class="post-editor-container">
     <div class="post-editor-title">Create New Post</div>
-    <TextEditor @onSubmit="onSubmit"/>
+    <TextEditor/>
   </div>
 </template>
 <script lang="ts">
@@ -14,10 +14,6 @@ import RoundButton from "@/components/button/RoundButton.vue";
   components: {RoundButton, TextEditor}
 })
 export default class BlogPost extends CommonView {
-
-
-  onSubmit() {
-  }
 
 }
 </script>

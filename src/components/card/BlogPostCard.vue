@@ -3,8 +3,9 @@
     <img class="blog-card-img" :src="image" v-if="image"/>
     <div class="post-card-box">
       <div class="blog-card-title" v-text="title"/>
-      <div class="blog-card-contents" v-text="contents"/>
       <div class="blog-card-date" v-text="createAt"/>
+      <div class="blog-card-contents" v-text="contents"/>
+
     </div>
   </el-card>
 </template>
@@ -50,7 +51,7 @@ export default class BlogPostCard extends Vue {
 
 .post-card-container {
   width: 330px;
-  height: 420px;
+  height: 200px;
   background-color: white;
   border-radius: 20px;
   transition: 300ms ease all;

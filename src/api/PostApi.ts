@@ -1,4 +1,4 @@
-import {getAxios} from "@/api/AxiosCofig";
+import {getAxios, getAxiosAuth} from "@/api/AxiosConfig";
 
 export function getPostList(): Promise<any> {
     return getAxios().get("/post/list");
@@ -6,4 +6,8 @@ export function getPostList(): Promise<any> {
 
 export function getPostDetail(id): Promise<any> {
     return getAxios().get(`/post/${id}`);
+}
+
+export function createNewPost(data): Promise<any> {
+    return getAxiosAuth().post('/post/', data);
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="editor-box">
     <div class="editor-title">
-      <el-input v-model="title" placeholder="title"/>
+      <el-input v-model="title" placeholder="title" maxlength="30" show-word-limit/>
     </div>
     <div v-if="editor" class="editor-header">
       <div class="editor-header-buttons">
@@ -17,6 +17,7 @@
           <font-awesome icon="strikethrough"/>
         </button>
         <select @change="onHeadingChange">
+          <option label="no heading" :value="heading"/>
           <option label="h1" value="1"/>
           <option label="h2" value="2"/>
           <option label="h3" value="3"/>
@@ -49,33 +50,30 @@
         <button @click="editor.chain().focus().redo().run()">
           <font-awesome icon="redo"/>
         </button>
-        <input id="imageInput" name="imageInput" type="file" accept=".gif, .jpg, .png" @change="addImage" :ref="image"/>
-        <label for="imageInput" v-if="imageIsNull">
-          <font-awesome icon="image"/>
-        </label>
-        <div v-else>
-          <p>{{ imageName }}</p>
-          <button>삭제</button>
-        </div>
       </div>
       <div class="editor-header-right">
-        <RoundButton button-label="submit" style="margin-right:5px;"/>
+        <RoundButton button-label="submit" style="margin-right:5px;" @onClick="onSubmit"/>
       </div>
 
     </div>
-    <editor-content class="editor-content" :editor="editor" v-if="editor"/>
-    <div class="limit-text">
-      {{ getCurText }}/{{ limit }}
+    <div @click="onFocus" class="editor-content-box">
+      <editor-content class="editor-content" :editor="editor" v-if="editor"/>
+      <div class="limit-text">
+        {{ getCurText }}/{{ limit }}
+      </div>
     </div>
+
   </div>
 </template>
 
 <script lang="ts">
 import {Editor, EditorContent, FloatingMenu} from '@tiptap/vue-2'
-import {Component, Vue} from "vue-property-decorator";
+import {Component} from "vue-property-decorator";
 import RoundButton from "@/components/button/RoundButton.vue";
 import StarterKit from "@tiptap/starter-kit";
 import CharacterCount from "@tiptap/extension-character-count";
+import CommonView from "@/views/CommonView";
+import {createNewPost} from "@/api/PostApi";
 
 @Component({
   components: {
@@ -84,11 +82,12 @@ import CharacterCount from "@tiptap/extension-character-count";
     FloatingMenu
   }
 })
-export default class TextEditor extends Vue {
+export default class TextEditor extends CommonView {
+
   editor: Editor;
   title: string = '';
   limit = 5000;
-  image = null;
+  heading = 0;
 
   beforeMount() {
     this.editor = new Editor({
@@ -105,29 +104,49 @@ export default class TextEditor extends Vue {
     this.editor?.destroy()
   }
 
-  onHeadingChange() {
-    this.editor.chain().focus().toggleHeading({level: 1}).run()
+
+  get getCurText() {
+    return this.editor.getText().length | 0;
+  }
+
+
+  onHeadingChange(e) {
+    if (e.target.value === 0) {
+      console.log(this.heading)
+      this.editor.chain().focus().toggleHeading({level: parseInt(this.heading)}).run();
+      this.heading = 0;
+    } else {
+      this.editor.chain().focus().toggleHeading({level: parseInt(e.target.value)}).run();
+      this.heading = e.target.value;
+    }
+
   }
 
   onFocus() {
     this.editor.chain().focus();
   }
 
-  get getCurText() {
-    return this.editor.getText().length | 0;
+  onSubmit() {
+    const data = {
+      title: this.title,
+      contents: this.editor.getHTML(),
+    };
+    createNewPost(data).then(res => {
+      const {message, result} = res.data;
+      this.alertData.type = 'success';
+      this.alertData.title = message;
+      this.alertData.description = result.message;
+      this.alertData.isShow = true;
+      result.data && this.$router.push({name: 'postDetail', params: {id: result.data.ID}});
+    }).catch(err => {
+      const {message, result} = err.response.data;
+      this.alertData.type = 'error';
+      this.alertData.title = message;
+      this.alertData.description = result.message;
+    })
+
   }
 
-  addImage(e) {
-    this.image = e.target.files[0];
-  }
-
-  get imageIsNull() {
-    return this.image === null;
-  }
-
-  get imageName() {
-    return this.image.name;
-  }
 }
 </script>
 <style>
@@ -186,6 +205,11 @@ export default class TextEditor extends Vue {
   background-color: cornflowerblue;
   color: white;
 
+}
+
+.editor-content-box {
+  width: 100%;
+  height: 100%;
 }
 
 .editor-content {
@@ -259,10 +283,8 @@ pre {
   margin: 2rem 0;
 }
 
-#imageInput {
-  width: 0;
-  height: 0;
-  visibility: hidden;
+.ProseMirror li{
+  margin-left: 20px;
 }
 
 </style>

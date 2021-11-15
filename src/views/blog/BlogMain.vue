@@ -29,8 +29,9 @@ export default class BlogMain extends CommonView {
   mounted() {
     getPostList()
         .then(res => {
-          const {data} = res.data.result.data;
+          const {data} = res.data.result;
           this.postList = data;
+          this.postList.forEach(el => el.CONTENTS = el.CONTENTS.replace(/(<([^>]+)>)/gi, ""));
         })
         .catch(err => {
           const {message, result} = err.response.data;
@@ -75,7 +76,7 @@ export default class BlogMain extends CommonView {
   display: none; /* Chrome, Safari, Opera*/
 }
 
-.is-opened{
+.is-opened {
   background-color: transparent !important;
 }
 </style>
